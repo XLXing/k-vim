@@ -98,7 +98,7 @@ set cursorline
 
 " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 不需要可以去掉
 " 好处：误删什么的，如果以前屏幕打开，可以找回
-set t_ti= t_te=
+" set t_ti= t_te=
 
 
 " 鼠标暂不启用, 键盘党....
@@ -315,7 +315,7 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " 打开自动定位到最后编辑的位置, 需要确认 .viminfo 当前用户可写
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 "==========================================
@@ -346,14 +346,14 @@ noremap <F1> <Esc>"
 " F2 行号开关，用于鼠标复制代码用
 " 为方便复制，用<F2>开启/关闭行号显示:
 function! HideNumber()
-  if(&relativenumber == &number)
-    set relativenumber! number!
-  elseif(&number)
-    set number!
-  else
-    set relativenumber!
-  endif
-  set number?
+if(&relativenumber == &number)
+set relativenumber! number!
+elseif(&number)
+set number!
+else
+set relativenumber!
+endif
+set number?
 endfunc
 nnoremap <F2> :call HideNumber()<CR>
 " F3 显示可打印字符开关
@@ -365,8 +365,8 @@ nnoremap <F4> :set wrap! wrap?<CR>
 nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 set pastetoggle=<F5>            "    when in insert mode, press <F5> to go to
-                                "    paste mode, where you can paste mass data
-                                "    that won't be autoindented
+                            "    paste mode, where you can paste mass data
+                            "    that won't be autoindented
 
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
@@ -375,9 +375,9 @@ au InsertLeave * set nopaste
 " F5 粘贴模式paste_mode开关,用于有格式的代码粘贴
 " Automatically set paste mode in Vim when pasting in insert mode
 function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
+set pastetoggle=<Esc>[201~
+set paste
+return ""
 endfunction
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
@@ -393,18 +393,19 @@ map <C-l> <C-W>l
 " http://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
-    if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
+if exists('t:zoomed') && t:zoomed
+    execute t:zoom_winrestcmd
+    let t:zoomed = 0
+else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <Leader>z :ZoomToggle<CR>
+nnoremap <Leader><Leader>t :Tagbar<CR>
 
 
 " Go to home and end using capitalized directions
@@ -497,8 +498,8 @@ nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 autocmd TabLeave * let g:last_active_tab = tabpagenr()
 
 " 新建tab  Ctrl+t
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-t>     <Esc>:tabnew<CR>
+" nnoremap <C-t>     :tabnew<CR>
+" inoremap <C-t>     <Esc>:tabnew<CR>
 
 
 " => 选中及操作改键
@@ -665,8 +666,8 @@ endif
 set background=dark
 set t_Co=256
 
-colorscheme solarized
-" colorscheme molokai
+" colorscheme solarized
+colorscheme molokai
 " colorscheme desert
 
 
